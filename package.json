@@ -2,11 +2,11 @@
   "name": "server_geoipm",
   "version": "1.0.0",
   "description": "BE for GeoIPM",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "dev": "nodemon server"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
