@@ -3,7 +3,7 @@ const { sequelize } = require("../models/index.js");
 
 module.exports.getAll = async function (req, res) {
   try {
-    const allData = await db.provinsi.findAll(
+    const allData = await db.Provinsi.findAll(
       {
         attributes:['id','nama_provinsi','latitude','longitude'],
         order: [['id', 'ASC']]
