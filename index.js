@@ -22,7 +22,7 @@ const corsOptions = {
     origin: allowedOrigin,
     credentials: true, //access-control-allow-cr0edentials:true
     optionSuccessStatus: 200,
-    allowedHeaders: 'Content-Type'
+    allowedHeaders: ['Content-Type', 'Authorization']
 }
   
 // Use Cors Middleware
