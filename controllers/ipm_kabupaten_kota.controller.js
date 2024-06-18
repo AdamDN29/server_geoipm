@@ -250,8 +250,8 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
   module.exports.getLastDataIPM = async function (req, res) {
     try {
       const lastData = await db.IPM_Kabupaten_Kota.findOne({
-        order: [ [ 'createdAt', 'DESC' ]] ,
-        attributes: ['id', 'tahun', 'uhh', 'kabupaten_kota_Id']  
+        order: [ [ 'id', 'DESC' ]] ,
+        attributes: ['id', 'tahun', 'kabupaten_kota_Id']  
       });
   
       // const lastData = await db.IPM_Provinsi.findOne({ order: [ [ 'createdAt', 'DESC' ]] })
@@ -340,7 +340,7 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
       gwr
     } = req.body;
 
-    const lastData = await db.IPM_Kabupaten_Kota.findOne({ order: [ [ 'createdAt', 'DESC' ]] })
+    const lastData = await db.IPM_Kabupaten_Kota.findOne({ order: [ [ 'id', 'DESC' ]] })
     const lastID = lastData.id + 1;
 
     let id;
