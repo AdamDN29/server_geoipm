@@ -10,10 +10,11 @@ db.sequelize.sync();
 
 // Allowed Various Access
 const allowedOrigin = [
-    "http://localhost:3000/",
-    "http://localhost:3000",
     "https://geoipm.netlify.app/",
-    "https://geoipm.netlify.app"
+    "https://geoipm.netlify.app",
+    "http://localhost:3000/",
+    "http://localhost:3000"
+   
 ];
 
 // Option for Cors Middleware
