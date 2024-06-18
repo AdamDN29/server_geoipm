@@ -19,10 +19,10 @@ const allowedOrigin = [
 
 // Option for Cors Middleware
 const corsOptions = {
-    origin: '*',
+    origin: allowedOrigin,
     credentials: true, //access-control-allow-cr0edentials:true
     optionSuccessStatus: 200,
-    allowedHeaders: ['Origin','Content-Type','Accept']
+    allowedHeaders: 'Content-Type'
 }
   
 // Use Cors Middleware
