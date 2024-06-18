@@ -34,7 +34,7 @@ module.exports.getAllDataProvinsi = async function (req, res) {
           }
         ],
         group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
-        order: [['provinsi_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['id', 'ASC'],['tahun', 'DESC']]
       })
     }else{
       dataIPM = await db.IPM_Provinsi.findAll({
@@ -45,7 +45,7 @@ module.exports.getAllDataProvinsi = async function (req, res) {
           }
         ],
         group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
-        order: [['provinsi_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['id', 'ASC'],['tahun', 'DESC']]
       })
     }
 
@@ -78,7 +78,7 @@ module.exports.getOneDataProvinsi = async function (req, res) {
           }
         ],
         group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
-        order: [['provinsi_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['tahun', 'DESC']]
       })
     }else{
       dataIPM = await db.IPM_Provinsi.findAll({
@@ -90,7 +90,7 @@ module.exports.getOneDataProvinsi = async function (req, res) {
           }
         ],
         group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
-        order: [['provinsi_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['tahun', 'DESC']]
       })
     }
    

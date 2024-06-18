@@ -34,7 +34,7 @@ module.exports.getAllDataKabKot = async function (req, res) {
           }
         ],
         group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-        order: [['kabupaten_kota_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['id', 'ASC'],['tahun', 'DESC']]
       })
     }else{
       dataIPM = await db.IPM_Kabupaten_Kota.findAll({
@@ -45,7 +45,7 @@ module.exports.getAllDataKabKot = async function (req, res) {
           }
         ],
         group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-        order: [['kabupaten_kota_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['id', 'ASC'],['tahun', 'DESC']]
       })
     }
 
@@ -79,7 +79,7 @@ module.exports.getOneDataKabKot = async function (req, res) {
           }
         ],
         group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-        order: [['kabupaten_kota_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['tahun', 'DESC']]
       })
     }else{
       dataIPM = await db.IPM_Kabupaten_Kota.findAll({
@@ -91,7 +91,7 @@ module.exports.getOneDataKabKot = async function (req, res) {
           }
         ],
         group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-        order: [['kabupaten_kota_Id', 'ASC'],['tahun', 'ASC']]
+        order: [['tahun', 'DESC']]
       })
     }
 
@@ -127,7 +127,7 @@ module.exports.getManyDataKabKot = async function (req, res) {
         }
       ],
       group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-      order: [['kabupaten_kota_Id', 'ASC'],['tahun', 'ASC']],
+      order: [['id', 'ASC'],['tahun', 'DESC']],
     })
   }else{
     dataIPM = await db.IPM_Kabupaten_Kota.findAll({
@@ -140,7 +140,7 @@ module.exports.getManyDataKabKot = async function (req, res) {
         }
       ],
       group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-      order: [['kabupaten_kota_Id', 'ASC'],['tahun', 'ASC']],
+      order: [['id', 'ASC'],['tahun', 'DESC']],
     })
   }
 
