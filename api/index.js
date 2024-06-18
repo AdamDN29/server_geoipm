@@ -22,6 +22,7 @@ const corsOptions = {
     origin: allowedOrigin,
     credentials: true, //access-control-allow-cr0edentials:true
     optionSuccessStatus: 200,
+    allowedHeaders: ['Origin','Content-Type','Accept']
 }
   
 // Use Cors Middleware
