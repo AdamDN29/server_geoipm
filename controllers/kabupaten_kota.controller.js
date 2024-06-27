@@ -117,3 +117,84 @@ module.exports.getKabupaten_KotaById = async function (req, res) {
       });
     }
   }
+
+  module.exports.createKabKot = async function (req, res) {
+    console.log('hit');
+    const {
+      nama_wilayah,
+      latitude,
+      longitude,
+      provinsi_Id,
+    } = req.body;
+  
+    const lastData = await db.Kabupaten_Kota.findOne({ order: [ [ 'id', 'DESC' ]] })
+    const id = lastData.id + 1;
+
+    const nama_kabupaten_kota = nama_wilayah;
+  
+    const createData = {
+      id,
+      nama_kabupaten_kota,
+      latitude,
+      longitude,
+      provinsi_Id
+    };
+  
+    try {
+      // check if name exist
+      const existData = await db.Kabupaten_Kota.findOne({ where: { nama_kabupaten_kota } })
+      if (existData) {
+        return res.status(409).json({
+          success: false,
+          flag: true,
+          message: "Wilayah dengan nama tersebut sudah ada!"
+        });
+      };
+  
+      const createdData = await db.Kabupaten_Kota.create(createData);
+  
+      return res.status(200).json({
+        success: true,
+        data: createdData,
+        message: "Data Wilayah Berhasil Ditambah!"
+      });
+    } catch (error) {
+      return res.status(400).json({
+        sucess: false,
+        error: error,
+        message: error.message
+      });
+    }
+  }
+
+  module.exports.deleteDataById = async function (req, res) {
+    try {
+      const { id } = req.params;
+
+      await db.IPM_Kabupaten_Kota.destroy({where: { kabupaten_kota_Id: id } })
+  
+      const deletedData = await db.Kabupaten_Kota.findByPk(id);
+  
+      if (!deletedData) {
+        return res.status(404).json({
+          sucess: false,
+          flag: true,
+          message: 'Data Tidak Ditemukan!'
+        });
+      }
+  
+      await deletedData.destroy();
+  
+      return res.status(200).json({
+        success: true,
+        data: deletedData,
+        message: 'Data Berhasil Dihapus'
+      });
+    } catch (error) {
+      return res.status(400).json({
+        sucess: false,
+        error: error,
+        message: error.message
+      });
+    }
+  }

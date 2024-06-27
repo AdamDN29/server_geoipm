@@ -95,4 +95,82 @@ module.exports.getProvinsiById = async function (req, res) {
     }
   }
 
+  module.exports.createProvinsi = async function (req, res) {
+    console.log('hit');
+    const {
+      nama_wilayah,
+      latitude,
+      longitude,
+    } = req.body;
+  
+    const lastData = await db.Provinsi.findOne({ order: [ [ 'id', 'DESC' ]] })
+    const id = lastData.id + 1;
+    
+    const nama_provinsi = nama_wilayah;
+
+    const createData = {
+      id,
+      nama_provinsi,
+      latitude,
+      longitude,
+    };
+  
+    try {
+      // check if name exist
+      const existData = await db.Provinsi.findOne({ where: { nama_provinsi } })
+      if (existData) {
+        return res.status(409).json({
+          success: false,
+          flag: true,
+          message: "Wilayah dengan nama tersebut sudah ada!"
+        });
+      };
+  
+      const createdData = await db.Provinsi.create(createData);
+  
+      return res.status(200).json({
+        success: true,
+        data: createdData,
+        message: "Data Wilayah Berhasil Ditambah!"
+      });
+    } catch (error) {
+      return res.status(400).json({
+        sucess: false,
+        error: error,
+        message: error.message
+      });
+    }
+  }
+  
+  module.exports.deleteDataById = async function (req, res) {
+    try {
+      const { id } = req.params;
+
+      await db.IPM_Provinsi.destroy({where: { provinsi_Id: id } })
+
+      const deletedData = await db.Provinsi.findByPk(id);
+  
+      if (!deletedData) {
+        return res.status(404).json({
+          sucess: false,
+          flag: true,
+          message: 'Data Tidak Ditemukan!'
+        });
+      }
+  
+      await deletedData.destroy();
+  
+      return res.status(200).json({
+        success: true,
+        data: deletedData,
+        message: 'Data Berhasil Dihapus'
+      });
+    } catch (error) {
+      return res.status(400).json({
+        sucess: false,
+        error: error,
+        message: error.message
+      });
+    }
+  }
   
