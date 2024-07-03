@@ -7,6 +7,7 @@ calculateRouter.get('/getKabKot/:dataType/:year', calculateController.getCalcKab
 calculateRouter.get('/getTotal/', calculateController.getAllTotal);
 calculateRouter.get('/getGWRProvinsi/:year', calculateController.getGWRProvinsi);
 calculateRouter.get('/getGWRKabKot/:year', calculateController.getGWRKabKot);
-// calculateRouter.get('/getGWR/', calculateController.getGWR);
+calculateRouter.get('/getCalcGWRProvinsi/:dataType/:year', calculateController.getCalcGWRProvinsi);
+calculateRouter.get('/getCalcGWRKabKot/:dataType/:year', calculateController.getCalcGWRKabKot);
 
 module.exports = calculateRouter;
