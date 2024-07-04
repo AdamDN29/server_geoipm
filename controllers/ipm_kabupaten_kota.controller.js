@@ -34,7 +34,7 @@ module.exports.getAllDataKabKot = async function (req, res) {
           }
         ],
         group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-        order: [['id', 'ASC'],['tahun', 'DESC']]
+        order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }else{
       dataIPM = await db.IPM_Kabupaten_Kota.findAll({
@@ -45,7 +45,7 @@ module.exports.getAllDataKabKot = async function (req, res) {
           }
         ],
         group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-        order: [['id', 'ASC'],['tahun', 'DESC']]
+        order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }
 
@@ -127,7 +127,7 @@ module.exports.getManyDataKabKot = async function (req, res) {
         }
       ],
       group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-      order: [['id', 'ASC'],['tahun', 'DESC']],
+      order: [['tahun', 'DESC'],['id', 'ASC']],
     })
   }else{
     dataIPM = await db.IPM_Kabupaten_Kota.findAll({
@@ -140,7 +140,7 @@ module.exports.getManyDataKabKot = async function (req, res) {
         }
       ],
       group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
-      order: [['id', 'ASC'],['tahun', 'DESC']],
+      order: [['tahun', 'DESC'],['id', 'ASC']],
     })
   }
 

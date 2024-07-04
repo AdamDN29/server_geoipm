@@ -34,7 +34,7 @@ module.exports.getAllDataProvinsi = async function (req, res) {
           }
         ],
         group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
-        order: [['id', 'ASC'],['tahun', 'DESC']]
+        order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }else{
       dataIPM = await db.IPM_Provinsi.findAll({
@@ -45,7 +45,7 @@ module.exports.getAllDataProvinsi = async function (req, res) {
           }
         ],
         group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
-        order: [['id', 'ASC'],['tahun', 'DESC']]
+        order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }
 
