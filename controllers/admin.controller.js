@@ -74,13 +74,13 @@ module.exports.login = async function (req, res) {
       });
     }
     // Verify Password
-    // const passwordValid = await bcrypt.compare(password, admin.password);
-    // if(!passwordValid){
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "Email/Username dan Password Tidak Sesuai!",
-    //   });
-    // }
+    const passwordValid = await bcrypt.compare(password, admin.password);
+    if(!passwordValid){
+      return res.status(401).json({
+        success: false,
+        message: "Email/Username dan Password Tidak Sesuai!",
+      });
+    }
 
     // Login process
     const token = await jwt.sign(
@@ -205,13 +205,13 @@ module.exports.updatePassAdmin = async function (req, res) {
     }
 
     // Verify Password
-    // const passwordValid = await bcrypt.compare(oldpassword, editedData.password);
-    // if(!passwordValid){
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "Password Lama Tidak Sesuai!",
-    //   });
-    // }
+    const passwordValid = await bcrypt.compare(oldpassword, editedData.password);
+    if(!passwordValid){
+      return res.status(401).json({
+        success: false,
+        message: "Password Lama Tidak Sesuai!",
+      });
+    }
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(newpassword, salt);
