@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 
 const apiRouter = require("./routes/index");
 
@@ -13,8 +14,7 @@ const allowedOrigin = [
     "https://geoipm.netlify.app/",
     "https://geoipm.netlify.app",
     "http://localhost:3000/",
-    "http://localhost:3000"
-   
+    "http://localhost:3000"  
 ];
 
 // Option for Cors Middleware
@@ -28,13 +28,15 @@ const corsOptions = {
 // Use Cors Middleware
 app.use(cors(corsOptions));
 
+// Use cookieParser
+app.use(cookieParser());
+
 // For parse request
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: false }));
 
 
 // Simple Route
-// app.get('/', (req, res) => res.send('Welcome to API GeoIPM Indonesia'));
 app.get("/", (req, res) => {
     res.json('Welcome to API GeoIPM Indonesia')
 });

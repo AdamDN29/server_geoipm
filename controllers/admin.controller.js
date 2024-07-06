@@ -1,6 +1,8 @@
 const db = require("../models/index.js");
 const { sequelize } = require("../models/index.js");
 const { Op } = require("sequelize");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 module.exports.getAll = async function (req, res) {
   try {
@@ -19,50 +21,91 @@ module.exports.getAll = async function (req, res) {
   }
 }
 
+module.exports.registerAdmin = async function (req, res) {
+  try {
+      const { nama, email, username, password } = req.body;
+      // Check if the email exists
+      const userExists = await db.admin.findOne({
+          where: {      
+            [Op.or]: [
+              { email  },
+              { username }
+            ]   
+          } 
+      });
+      if (userExists) {
+          return res.status(400).send('Email atau username sudah ada');
+      }
+      const salt = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash(password, salt);
+
+      await db.admin.create({
+          nama,
+          email,
+          username,
+          password: hashPassword,
+      });
+      return res.status(200).send('Registrasi berhasil');
+  } catch (error) {
+    return res.status(400).json({
+      sucess: false,
+      error: error,
+      message: error.message,
+    });
+  }
+}
+
 module.exports.login = async function (req, res) {
   try {
+    const {email, password} = req.body;
     const admin = await db.admin.findOne({ 
       where: {      
         [Op.or]: [
-          { email: req.body.email  },
-          { username: req.body.email  }
+          { email },
+          { username: email }
         ]   
       } 
     });
-    if (admin) {
-      // const password = bcrypt.compareSync(req.body.password, admin.password);
-      if (admin.password === req.body.password) {
-        // const token = await jwt.sign(
-        //   { id: admin.id, name: admin.nama },
-        //   process.env.SECRET_TOKEN,
-        //   { expiresIn: "1h" }
-        // );
-        // res.cookie("jwt", token, {
-        //   maxAge: 60 * 60 * 1000,
-        //   httpOnly: true,
-        //   secure: true,
-        //   sameSite: "none",
-        // });
-        return res.status(200).json({
-          success: true,
-          message: "Login Berhasil",
-          data: {
-            idAdmin: admin.id,
-            email: admin.email,
-            nama: admin.nama,
-            username: admin.username,
-          },
-        });
-      }
+    // Verify Account
+    if(!admin){
       return res.status(401).json({
         success: false,
-        message: "Email dan Password Tidak Sesuai!",
+        message: "Email/Username Tidak Ditemukan!",
       });
     }
-    return res.status(401).json({
-      success: false,
-      message: "Email Tidak Ditemukan!",
+    // Verify Password
+    // const passwordValid = await bcrypt.compare(password, admin.password);
+    // if(!passwordValid){
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: "Email/Username dan Password Tidak Sesuai!",
+    //   });
+    // }
+
+    // Login process
+    const token = await jwt.sign(
+      { id: admin.id, name: admin.nama },
+      process.env.SECRET_TOKEN,
+      { expiresIn: "1h" }
+    );
+    res.cookie("jwt", token, {
+      maxAge: 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
     });
+    return res.status(200).json({
+      success: true,
+      message: "Login Berhasil",
+      data: {
+        idAdmin: admin.id,
+        email: admin.email,
+        nama: admin.nama,
+        username: admin.username,
+        token,
+      },
+    });
+
   } catch (error) {
     return res.status(400).json({
       sucess: false,
@@ -72,10 +115,20 @@ module.exports.login = async function (req, res) {
   }
 };
 
+module.exports.logout = (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+
+  return res.status(200).json({
+    success: true,
+    message: "Logout Berhasil",
+  });
+};
+
 module.exports.getAdminById = async function (req, res) {
   const id = req.params.id;
   try {
-    const data = await db.admin.findByPk(id);
+    const data = await db.admin.findByPk(id, {
+      attributes: ['id', 'nama', 'username', 'email']});
 
     if (!data) {
       return res.status(404).json({
@@ -138,20 +191,33 @@ module.exports.updatePassAdmin = async function (req, res) {
   try {
     const { id } = req.params;
     const {
-      password,
+      oldpassword,
+      newpassword
     } = req.body;
-
-    const editData = {
-      password,
-    };
 
     const editedData = await db.admin.findByPk(id);
 
     if (!editedData) {
       return res.status(404).json({
         sucess: false,
-        message: 'Data not found!'
+        message: 'Data Tidak Ditemukan!'
       });
+    }
+
+    // Verify Password
+    // const passwordValid = await bcrypt.compare(oldpassword, editedData.password);
+    // if(!passwordValid){
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: "Password Lama Tidak Sesuai!",
+    //   });
+    // }
+
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(newpassword, salt);
+
+    const editData = {
+      password : hashPassword,
     }
 
     editedData.update(editData);
@@ -159,7 +225,7 @@ module.exports.updatePassAdmin = async function (req, res) {
     return res.status(200).json({
       success: true,
       // data: editedData,
-      message: 'Edit Success'
+      message: 'Edit Berhasil'
     })
   } catch (error) {
     return res.status(400).json({
@@ -169,3 +235,4 @@ module.exports.updatePassAdmin = async function (req, res) {
     });
   }
 }
+
