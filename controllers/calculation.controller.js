@@ -210,7 +210,7 @@ module.exports.getGWRKabKot = async function (req, res) {
       where: {tahun: year},
       include: [
         {
-          model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', required: false, attributes: ['id',['nama_kabupaten_kota','nama_wilayah'],'latitude','longitude']
+          model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', required: false, attributes: ['id','nama_kabupaten_kota','latitude','longitude']
         }
       ],
       group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
