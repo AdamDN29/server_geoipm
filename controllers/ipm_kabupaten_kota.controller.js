@@ -26,7 +26,7 @@ module.exports.getAllDataKabKot = async function (req, res) {
     
     if (year !== "all"){
       dataIPM = await db.IPM_Kabupaten_Kota.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr', 'kabupaten_kota_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr', 'kabupaten_kota_Id'],
         where: {tahun: year},
         include: [
           {
@@ -38,7 +38,7 @@ module.exports.getAllDataKabKot = async function (req, res) {
       })
     }else{
       dataIPM = await db.IPM_Kabupaten_Kota.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','kabupaten_kota_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
         include: [
           {
             model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota']
@@ -71,7 +71,7 @@ module.exports.getOneDataKabKot = async function (req, res) {
     
     if (year !== "all"){
       dataIPM = await db.IPM_Kabupaten_Kota.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','kabupaten_kota_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
         where: {kabupaten_kota_Id: id_kabkot, tahun: year},
         include: [
           {
@@ -83,7 +83,7 @@ module.exports.getOneDataKabKot = async function (req, res) {
       })
     }else{
       dataIPM = await db.IPM_Kabupaten_Kota.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','kabupaten_kota_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
         where: {kabupaten_kota_Id: id_kabkot},
         include: [
           {
@@ -117,7 +117,7 @@ module.exports.getManyDataKabKot = async function (req, res) {
 
   if (year !== "all"){
     dataIPM = await db.IPM_Kabupaten_Kota.findAll({
-      attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','kabupaten_kota_Id'],
+      attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
       where: {tahun: year},
       include: [
         {
@@ -131,7 +131,7 @@ module.exports.getManyDataKabKot = async function (req, res) {
     })
   }else{
     dataIPM = await db.IPM_Kabupaten_Kota.findAll({
-      attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','kabupaten_kota_Id'],
+      attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
       include: [
         {
           model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', 
@@ -226,7 +226,7 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
     const id = req.params.id;
     try {
       const allData = await db.IPM_Kabupaten_Kota.findByPk(id,{
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','kabupaten_kota_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
         include: [
           {
             model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota']
@@ -281,7 +281,7 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
         ipthn,
         iplrn,
         ipm,
-        gwr
+        mgwr
       } = req.body;
   
       const editData = {
@@ -293,7 +293,7 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
         ipthn,
         iplrn,
         ipm,
-        gwr
+        mgwr
       }
   
       const editedData = await db.IPM_Kabupaten_Kota.findByPk(id);
@@ -337,7 +337,7 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
       ipthn,
       iplrn,
       ipm,
-      gwr
+      mgwr
     } = req.body;
 
     const lastData = await db.IPM_Kabupaten_Kota.findOne({ order: [ [ 'id', 'DESC' ]] })
@@ -365,7 +365,7 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
       ipthn,
       iplrn,
       ipm,
-      gwr,
+      mgwr,
       kabupaten_kota_Id
     };
   

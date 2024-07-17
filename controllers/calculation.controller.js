@@ -4,23 +4,11 @@ const db = require("../models/index.js");
 const { sequelize } = require("../models/index.js");
 const math = require('mathjs');
 
-const turf = require('@turf/turf');
-// const turf = require('turf');
-// var gwrCalc = require('../hook/gwrCalc.js')
-
-
-
 module.exports.getCalcProvinsi = async function (req, res) {
   try {
     const dataType = req.params.dataType;
     const year = req.params.year;
 
-    // const dataProvinsi = await db.Provinsi.findAll(
-    //   {
-    //     attributes: ['id','nama_provinsi','latitude','longitude'],
-    //     order: [['id', 'ASC']],
-    //   }
-    // );
     const dataCalc = await db.IPM_Provinsi.findAll(
       {
         attributes: ['id',[dataType, 'value'],'provinsi_Id'],
@@ -30,7 +18,7 @@ module.exports.getCalcProvinsi = async function (req, res) {
     );
 
     let n;
-    if(dataType === 'ipm' || dataType === 'gwr'){n = 0.8;}
+    if(dataType === 'ipm' || dataType === 'mgwr'){n = 0.8;}
     else if(dataType === 'uhh'){n=0.8}
     else if(dataType === 'ahls' || dataType === 'ppd'){n=0.6}
     else if(dataType === 'arls' || dataType === 'iuhh'){n=0.4}
@@ -61,7 +49,6 @@ module.exports.getCalcProvinsi = async function (req, res) {
       stdev,
       min,
       max,
-      // dataRegion: dataProvinsi
     }
     return res.status(200).json({
       success: true,
@@ -91,7 +78,7 @@ module.exports.getCalcKabKot = async function (req, res) {
     );
 
     let n;
-    if(dataType === 'ipm' || dataType === 'gwr'){n = 0.8;}
+    if(dataType === 'ipm' || dataType === 'mgwr'){n = 0.8;}
     else if(dataType === 'uhh'){n=0.8}
     else if(dataType === 'ahls' || dataType === 'ppd'){n=0.6}
     else if(dataType === 'arls' || dataType === 'iuhh'){n=0.4}
@@ -122,7 +109,6 @@ module.exports.getCalcKabKot = async function (req, res) {
       stdev,
       min,
       max,
-      // dataRegion: dataKabKot
     }
     return res.status(200).json({
       success: true,
@@ -170,7 +156,7 @@ module.exports.getGWRProvinsi = async function (req, res) {
     let dataGWR;
 
     dataGWR = await db.IPM_Provinsi.findAll({
-      attributes: ['id', 'tahun', 'ipm', 'iuhh', 'ipthn', 'iplrn', ['gwr', 'value'], 'provinsi_Id'],
+      attributes: ['id', 'tahun', 'ipm', 'iuhh', 'ipthn', 'iplrn', ['mgwr', 'value'], 'provinsi_Id'],
       where: {tahun: year},
       include: [
         {
@@ -220,11 +206,11 @@ module.exports.getGWRKabKot = async function (req, res) {
     let dataGWR;
 
     dataGWR = await db.IPM_Kabupaten_Kota.findAll({
-      attributes: ['id', 'tahun', 'ipm', 'iuhh', 'ipthn', 'iplrn', ['gwr', 'value'], 'kabupaten_kota_Id'],
+      attributes: ['id', 'tahun', 'ipm', 'iuhh', 'ipthn', 'iplrn', ['mgwr', 'value'], 'kabupaten_kota_Id'],
       where: {tahun: year},
       include: [
         {
-          model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota','latitude','longitude']
+          model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', required: false, attributes: ['id',['nama_kabupaten_kota','nama_wilayah'],'latitude','longitude']
         }
       ],
       group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
@@ -271,7 +257,7 @@ module.exports.getCalcGWRProvinsi = async function (req, res) {
 
     const dataCalc = await db.IPM_Provinsi.findAll(
       {
-        attributes: ['id',['gwr', 'value'],'provinsi_Id'],
+        attributes: ['id',['mgwr', 'value'],'provinsi_Id'],
         where: {tahun: year},
         order: [['provinsi_Id', 'ASC']],
       }
@@ -316,8 +302,6 @@ module.exports.getCalcGWRProvinsi = async function (req, res) {
       Q2,
       Q3,
       Q4,
-      // data: arrTotal
-      // dataRegion: dataProvinsi
     }
     return res.status(200).json({
       success: true,
@@ -340,7 +324,7 @@ module.exports.getCalcGWRKabKot = async function (req, res) {
 
     const dataCalc = await db.IPM_Kabupaten_Kota.findAll(
       {
-        attributes: ['id',['gwr', 'value'],'kabupaten_kota_Id'],
+        attributes: ['id',['mgwr', 'value'],'kabupaten_kota_Id'],
         where: {tahun: year},
         order: [['kabupaten_kota_Id', 'ASC']],
       }

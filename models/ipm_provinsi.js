@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     iuhh: DataTypes.FLOAT,
     ipthn: DataTypes.FLOAT,
     iplrn: DataTypes.FLOAT,
-    gwr: DataTypes.STRING,
+    mgwr: DataTypes.STRING,
     provinsi_Id: DataTypes.INTEGER
   }, {
     sequelize,

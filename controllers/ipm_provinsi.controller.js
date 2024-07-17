@@ -26,7 +26,7 @@ module.exports.getAllDataProvinsi = async function (req, res) {
     
     if (year !== "all"){
       dataIPM = await db.IPM_Provinsi.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr', 'provinsi_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr', 'provinsi_Id'],
         where: {tahun: year},
         include: [
           {
@@ -38,7 +38,7 @@ module.exports.getAllDataProvinsi = async function (req, res) {
       })
     }else{
       dataIPM = await db.IPM_Provinsi.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr', 'provinsi_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr', 'provinsi_Id'],
         include: [
           {
             model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
@@ -70,7 +70,7 @@ module.exports.getOneDataProvinsi = async function (req, res) {
     let dataIPM;
     if (year !== "all"){
       dataIPM = await db.IPM_Provinsi.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','provinsi_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','provinsi_Id'],
         where: {provinsi_Id: id_provinsi, tahun: year},
         include: [
           {
@@ -82,7 +82,7 @@ module.exports.getOneDataProvinsi = async function (req, res) {
       })
     }else{
       dataIPM = await db.IPM_Provinsi.findAll({
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','provinsi_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','provinsi_Id'],
         where: {provinsi_Id: id_provinsi},
         include: [
           {
@@ -177,7 +177,7 @@ module.exports.getIPMProvinsiById = async function (req, res) {
     const id = req.params.id;
     try {
       const allData = await db.IPM_Provinsi.findByPk(id, {
-        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'gwr','provinsi_Id'],
+        attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','provinsi_Id'],
         include: [
           {
             model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
@@ -232,7 +232,7 @@ module.exports.updateDataIPM = async function (req, res) {
       ipthn,
       iplrn,
       ipm,
-      gwr
+      mgwr
     } = req.body;
 
     const editData = {
@@ -244,7 +244,7 @@ module.exports.updateDataIPM = async function (req, res) {
       ipthn,
       iplrn,
       ipm,
-      gwr
+      mgwr
     }
 
     const editedData = await db.IPM_Provinsi.findByPk(id);
@@ -288,7 +288,7 @@ module.exports.createDataIPM = async function (req, res) {
     ipthn,
     iplrn,
     ipm,
-    gwr
+    mgwr
   } = req.body;
 
   const lastData = await db.IPM_Provinsi.findOne({ order: [ [ 'id', 'DESC' ]] })
@@ -316,7 +316,7 @@ module.exports.createDataIPM = async function (req, res) {
     ipthn,
     iplrn,
     ipm,
-    gwr,
+    mgwr,
     provinsi_Id
   };
 

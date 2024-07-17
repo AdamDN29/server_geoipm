@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return Promise.all([
       queryInterface.changeColumn('IPM_Provinsis', 'gwr', {
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
       }),
     ]);
   },

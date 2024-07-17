@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
     nama_kabupaten_kota: DataTypes.STRING,
     latitude: DataTypes.FLOAT,
     longitude: DataTypes.FLOAT,
-    geojson: DataTypes.TEXT,
     provinsi_Id: DataTypes.INTEGER
   }, {
     sequelize,

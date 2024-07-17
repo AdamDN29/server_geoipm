@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     nama_provinsi: DataTypes.STRING,
     latitude: DataTypes.FLOAT,
     longitude: DataTypes.FLOAT,
-    geojson: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Provinsi',
