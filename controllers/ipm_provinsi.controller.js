@@ -93,6 +93,13 @@ module.exports.getOneDataProvinsi = async function (req, res) {
         order: [['tahun', 'DESC']]
       })
     }
+
+    if(dataIPM.length === 0){
+      return res.status(200).json({
+        sucess: false,
+        message: "Data Tidak Ditemukan"
+      })
+    }
    
     return res.status(200).json({
       sucess: true,
@@ -184,11 +191,19 @@ module.exports.getIPMProvinsiById = async function (req, res) {
           }
         ],
       });
-  
-      return res.status(200).json({
-        sucess: true,
-        data: allData
-      });
+
+      if(alldata.length === undefined){
+        return res.status(400).json({
+          sucess: false,
+          message: "Data Tidak Ditemukan"
+        })
+      }else{
+        return res.status(200).json({
+          sucess: true,
+          data: allData,
+          temp: alldata.length
+        });
+      }    
     } catch (error) {
       return res.status(400).json({
         sucess: false,

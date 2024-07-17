@@ -95,6 +95,13 @@ module.exports.getOneDataKabKot = async function (req, res) {
       })
     }
 
+    if(dataIPM.length === 0){
+      return res.status(200).json({
+        sucess: false,
+        message: "Data Tidak Ditemukan"
+      })
+    }
+
     return res.status(200).json({
       sucess: true,
       data: dataIPM
