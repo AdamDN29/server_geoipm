@@ -192,7 +192,7 @@ module.exports.getIPMProvinsiById = async function (req, res) {
         ],
       });
 
-      if(alldata.length === undefined){
+      if(allData.length === 0){
         return res.status(400).json({
           sucess: false,
           message: "Data Tidak Ditemukan"
@@ -201,7 +201,7 @@ module.exports.getIPMProvinsiById = async function (req, res) {
         return res.status(200).json({
           sucess: true,
           data: allData,
-          temp: alldata.length
+          temp: allData.length
         });
       }    
     } catch (error) {
