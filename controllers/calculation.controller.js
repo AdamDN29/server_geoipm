@@ -78,7 +78,7 @@ module.exports.getCalcKabKot = async function (req, res) {
     );
 
     let n;
-    if(dataType === 'ipm' || dataType === 'mgwr'){n = 0.8;}
+    if(dataType === 'ipm' || dataType === 'mgwr'){n = 0.7;}
     else if(dataType === 'uhh'){n=0.8}
     else if(dataType === 'ahls' || dataType === 'ppd'){n=0.6}
     else if(dataType === 'arls' || dataType === 'iuhh'){n=0.4}
