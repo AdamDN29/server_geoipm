@@ -5,7 +5,7 @@ module.exports.getAll = async function (req, res) {
   try {
     const allData = await db.Provinsi.findAll(
       {
-        attributes:['id','nama_provinsi','latitude','longitude'],
+        attributes:['id', ['nama_provinsi','nama_wilayah'],'latitude','longitude'],
         order: [['id', 'ASC']]
       }
     );
@@ -28,7 +28,7 @@ module.exports.getProvinsiById = async function (req, res) {
     try {
       const data = await db.Provinsi.findByPk(id_provinsi,
         {
-          attributes:['id','nama_provinsi','latitude','longitude']
+          attributes:['id', ['nama_provinsi','nama_wilayah'],'latitude','longitude']
         }
       );
 

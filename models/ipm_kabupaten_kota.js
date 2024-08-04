@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       IPM_Kabupaten_Kota.belongsTo(models.Kabupaten_Kota, { 
+        as: 'Wilayah',
         foreignKey: 'kabupaten_kota_Id',
         onDelete: 'CASCADE'
       })

@@ -30,10 +30,10 @@ module.exports.getAllDataProvinsi = async function (req, res) {
         where: {tahun: year},
         include: [
           {
-            model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
+            model: db.Provinsi, as: 'Wilayah', attributes: ['id', ['nama_provinsi', 'nama_wilayah']]
           }
         ],
-        group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
+        group: ['Wilayah.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
         order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }else{
@@ -41,10 +41,10 @@ module.exports.getAllDataProvinsi = async function (req, res) {
         attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr', 'provinsi_Id'],
         include: [
           {
-            model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
+            model: db.Provinsi, as: 'Wilayah', attributes: ['id', ['nama_provinsi', 'nama_wilayah']]
           }
         ],
-        group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
+        group: ['Wilayah.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
         order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }
@@ -74,10 +74,10 @@ module.exports.getOneDataProvinsi = async function (req, res) {
         where: {provinsi_Id: id_provinsi, tahun: year},
         include: [
           {
-            model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
+            model: db.Provinsi, as: 'Wilayah', attributes: ['id', ['nama_provinsi', 'nama_wilayah']]
           }
         ],
-        group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
+        group: ['Wilayah.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
         order: [['tahun', 'DESC']]
       })
     }else{
@@ -86,10 +86,10 @@ module.exports.getOneDataProvinsi = async function (req, res) {
         where: {provinsi_Id: id_provinsi},
         include: [
           {
-            model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
+            model: db.Provinsi, as: 'Wilayah', attributes: ['id', ['nama_provinsi', 'nama_wilayah']]
           }
         ],
-        group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
+        group: ['Wilayah.id', 'IPM_Provinsi.provinsi_Id','IPM_Provinsi.id'],
         order: [['tahun', 'DESC']]
       })
     }
@@ -126,10 +126,10 @@ module.exports.getDataProvinsi = async function (req, res) {
       where: {tahun: year},
       include: [
         {
-          model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi', 'latitude','longitude']
+          model: db.Provinsi, as: 'Wilayah', attributes: ['id', ['nama_provinsi', 'nama_wilayah'], 'latitude','longitude']
         }
       ],
-      group: ['Provinsi.id', 'IPM_Provinsi.provinsi_Id', query],
+      group: ['Wilayah.id', 'IPM_Provinsi.provinsi_Id', query],
       order: [['provinsi_Id', 'ASC']]
     })
 
@@ -187,7 +187,7 @@ module.exports.getIPMProvinsiById = async function (req, res) {
         attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','provinsi_Id'],
         include: [
           {
-            model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
+            model: db.Provinsi, as: 'Wilayah', attributes: ['id', ['nama_provinsi', 'nama_wilayah']]
           }
         ],
       });

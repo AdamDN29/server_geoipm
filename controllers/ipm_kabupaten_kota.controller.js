@@ -30,10 +30,10 @@ module.exports.getAllDataKabKot = async function (req, res) {
         where: {tahun: year},
         include: [
           {
-            model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota']
+            model: db.Kabupaten_Kota, as: 'Wilayah', attributes: ['id', ['nama_kabupaten_kota','nama_wilayah']]
           }
         ],
-        group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
+        group: ['Wilayah.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
         order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }else{
@@ -41,10 +41,10 @@ module.exports.getAllDataKabKot = async function (req, res) {
         attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
         include: [
           {
-            model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota']
+            model: db.Kabupaten_Kota, as: 'Wilayah', attributes: ['id', ['nama_kabupaten_kota','nama_wilayah']]
           }
         ],
-        group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
+        group: ['Wilayah.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
         order: [['tahun', 'DESC'],['id', 'ASC']]
       })
     }
@@ -75,10 +75,10 @@ module.exports.getOneDataKabKot = async function (req, res) {
         where: {kabupaten_kota_Id: id_kabkot, tahun: year},
         include: [
           {
-            model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota']
+            model: db.Kabupaten_Kota, as: 'Wilayah', attributes: ['id', ['nama_kabupaten_kota','nama_wilayah']]
           }
         ],
-        group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
+        group: ['Wilayah.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
         order: [['tahun', 'DESC']]
       })
     }else{
@@ -87,10 +87,10 @@ module.exports.getOneDataKabKot = async function (req, res) {
         where: {kabupaten_kota_Id: id_kabkot},
         include: [
           {
-            model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota']
+            model: db.Kabupaten_Kota, as: 'Wilayah', attributes: ['id', ['nama_kabupaten_kota','nama_wilayah']]
           }
         ],
-        group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
+        group: ['Wilayah.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
         order: [['tahun', 'DESC']]
       })
     }
@@ -128,12 +128,12 @@ module.exports.getManyDataKabKot = async function (req, res) {
       where: {tahun: year},
       include: [
         {
-          model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', 
-          attributes: ['id','nama_kabupaten_kota', 'provinsi_Id'],
+          model: db.Kabupaten_Kota, as: 'Wilayah', 
+          attributes: ['id',['nama_kabupaten_kota','nama_wilayah'], 'provinsi_Id'],
           where: {provinsi_Id: id_provinsi}
         }
       ],
-      group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
+      group: ['Wilayah.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
       order: [['tahun', 'DESC'],['id', 'ASC']],
     })
   }else{
@@ -141,12 +141,12 @@ module.exports.getManyDataKabKot = async function (req, res) {
       attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
       include: [
         {
-          model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', 
-          attributes: ['id','nama_kabupaten_kota', 'provinsi_Id'],
+          model: db.Kabupaten_Kota, as: 'Wilayah', 
+          attributes: ['id',['nama_kabupaten_kota','nama_wilayah'], 'provinsi_Id'],
           where: {provinsi_Id: id_provinsi}
         }
       ],
-      group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
+      group: ['Wilayah.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id','IPM_Kabupaten_Kota.id'],
       order: [['tahun', 'DESC'],['id', 'ASC']],
     })
   }
@@ -176,10 +176,10 @@ module.exports.getDataKabKot = async function (req, res) {
       where: {tahun: year},
       include: [
         {
-          model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota','latitude','longitude','provinsi_Id']
+          model: db.Kabupaten_Kota, as: 'Wilayah', attributes: ['id', ['nama_kabupaten_kota','nama_wilayah'],'latitude','longitude','provinsi_Id']
         }
       ],
-      group: ['Kabupaten_Kotum.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id', query],
+      group: ['Wilayah.id', 'IPM_Kabupaten_Kota.kabupaten_kota_Id', query],
       order: [['kabupaten_kota_Id', 'ASC']]
     })
 
@@ -236,7 +236,7 @@ module.exports.getIPM_Kabupaten_KotaById = async function (req, res) {
         attributes: ['id', 'tahun', 'uhh', 'ahls', 'arls', 'ppd', 'iuhh', 'ipthn', 'iplrn', 'ipm', 'mgwr','kabupaten_kota_Id'],
         include: [
           {
-            model: db.Kabupaten_Kota, as: 'Kabupaten_Kotum', attributes: ['id','nama_kabupaten_kota']
+            model: db.Kabupaten_Kota, as: 'Wilayah', attributes: ['id', ['nama_kabupaten_kota','nama_wilayah']]
           }
         ],
       });

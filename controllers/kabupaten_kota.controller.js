@@ -5,7 +5,7 @@ module.exports.getAll = async function (req, res) {
   try {
     const allData = await db.Kabupaten_Kota.findAll(
       {
-        attributes:['id','nama_kabupaten_kota','latitude','longitude','provinsi_Id'],
+        attributes:['id', ['nama_kabupaten_kota', 'nama_wilayah'],'latitude','longitude','provinsi_Id'],
         order: [['id', 'ASC']]
       }
     );
@@ -29,7 +29,7 @@ module.exports.getKabKotbyProvinsi = async function (req, res) {
 
     const allData = await db.Kabupaten_Kota.findAll(
       {
-        attributes:['id','nama_kabupaten_kota','provinsi_Id', "latitude", "longitude"],
+        attributes:['id', ['nama_kabupaten_kota', 'nama_wilayah'],'provinsi_Id', "latitude", "longitude"],
         where: {provinsi_Id: id_provinsi},
         order: [['id', 'ASC']]
       }
@@ -53,7 +53,7 @@ module.exports.getKabupaten_KotaById = async function (req, res) {
     try {
       const data = await db.Kabupaten_Kota.findByPk(id_kabkot,
         {
-          attributes:['id','nama_kabupaten_kota','latitude','longitude','provinsi_Id'],
+          attributes:['id', ['nama_kabupaten_kota', 'nama_wilayah'],'latitude','longitude','provinsi_Id'],
           include: [
             {
               model: db.Provinsi, as: 'Provinsi', attributes: ['id','nama_provinsi']
