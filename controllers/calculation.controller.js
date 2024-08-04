@@ -221,7 +221,7 @@ module.exports.getGWRKabKot = async function (req, res) {
     const arrayTemp = [];
     dataGWR.map((item, i) => {
       temp = item.dataValues.value + '';
-      arrSplit = temp.split("+");
+      arrSplit = temp.split(/[\s,+(*)]+/);
       arrayTemp.push({
         'id': item.id,
         'iuhh_r': item.iuhh,
@@ -230,8 +230,8 @@ module.exports.getGWRKabKot = async function (req, res) {
         'ipm': item.ipm,
         'intercept': parseFloat(arrSplit[0]),
         'iuhh': parseFloat(arrSplit[1]),
-        'ipthn': parseFloat(arrSplit[2]),
-        'iplrn': parseFloat(arrSplit[3]),
+        'ipthn': parseFloat(arrSplit[3]),
+        'iplrn': parseFloat(arrSplit[5]),
         'Wilayah': item.Wilayah,
         'kabupaten_kota_Id': item.kabupaten_kota_Id
         });
@@ -271,13 +271,11 @@ module.exports.getCalcGWRProvinsi = async function (req, res) {
     else {type=0}
 
     let arrTotal = [];
-    let splitted = []
     dataCalc.forEach(item => {
       temp = item.dataValues.value + '';
       arrSplit = temp.split(/[\s,+(*)]+/);
       value = arrSplit[type];
       arrTotal.push(parseFloat(value));
-      splitted.push(arrSplit)
     });
 
     let totalData = 0;
@@ -300,7 +298,6 @@ module.exports.getCalcGWRProvinsi = async function (req, res) {
       stdev,
       min,
       max,
-      splitted
     }
     return res.status(200).json({
       success: true,
@@ -332,14 +329,14 @@ module.exports.getCalcGWRKabKot = async function (req, res) {
     let n = 0.5;
     let type = 0
     if(dataType === 'iuhh' ){type = 1;}
-    else if(dataType === 'ipthn'){type=2}
-    else if(dataType === 'iplrn'){type=3}
+    else if(dataType === 'ipthn'){type=3}
+    else if(dataType === 'iplrn'){type=5}
     else {type=0}
 
     let arrTotal = [];
     dataCalc.forEach(item => {
       temp = item.dataValues.value + '';
-      arrSplit = temp.split("+(");
+      arrSplit = temp.split(/[\s,+(*)]+/);
       value = arrSplit[type];
       arrTotal.push(parseFloat(value));
     });
@@ -352,18 +349,18 @@ module.exports.getCalcGWRKabKot = async function (req, res) {
     const totalKabKot = dataCalc.length;
     const average = totalData / totalKabKot;
 
-    // const stdev = math.std(arrTotal); 
-    // const min = average - (n * stdev);
-    // const max = average + (n * stdev);
+    const stdev = math.std(arrTotal); 
+    const min = average - (n * stdev);
+    const max = average + (n * stdev);
 
     const dataCalculate = {
       dataValue: dataType,
       sumData: totalData,
       totalKabKot,
       average,
-      // stdev,
-      // min,
-      // max,
+      stdev,
+      min,
+      max,
 
     }
     return res.status(200).json({
